@@ -43,9 +43,9 @@ __Tools:__ <br>
 
 
 # Contributors:<br>
-Stelian Todorichkov <br>
+[Stelian Todorichkov](https://github.com/StelianRBG) <br>
 Vladislav Kolev - https://github.com/Vladikolev0321 <br>
 Victor Dimitrov <br>
-[Martin Vrachev](https://github.com/mvvrachev)
-<br>Viktoriya Vasileva <br>
+[Martin Vrachev](https://github.com/mvvrachev)<br>
+Viktoriya Vasileva <br>
 
