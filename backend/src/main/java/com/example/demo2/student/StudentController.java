@@ -27,11 +27,23 @@ public class StudentController {
     }
 
     // Accessing the db contents
+
     @GetMapping("/students")
     public List<Student> index(){
         return studentRepository.findAll();
     }
 
+    // Create
+    @PostMapping("/students/create")
+    //  @ResponseBody
+    public Student createStudent(@RequestBody Student student){
+//        System.out.println(body);
+//        String name = body.get("name");
+//        Integer age = Integer.parseInt(body.get("age"));
+        return studentRepository.save(student);
+    }
+
+    // Read
 //        Integer age = Integer.parseInt(body.get("age"));
     @GetMapping("/students/{id}")
     public Student show(@PathVariable("id") Long id){
@@ -39,26 +51,33 @@ public class StudentController {
         return studentRepository.findById(id).orElse(null);
     }
 
-    @PostMapping("/students")
-    @ResponseBody
-    public Student createStudent(@RequestBody Student body){
-//        System.out.println(body);
+
+
+//    @PostMapping("/students")
+//    @ResponseBody
+//    public Student create(@RequestBody Map<String, String> body){
 //        String name = body.get("name");
 //        Integer age = Integer.parseInt(body.get("age"));
-        return studentRepository.save(body);
-    }
+//        return studentRepository.save(new Student(name, age));
+//    }
 
+    // Update
     @PutMapping("/students/{id}")
     public Student update(@PathVariable("id") long id, @RequestBody Map<String, String> body){
        // int studentId = Integer.parseInt(id);
         // getting blog
         Student student = studentRepository.findById(id).orElse(null);
-        student.setName(body.get("name"));
-        student.setAge(Integer.parseInt(body.get("content")));
-        return studentRepository.save(student);
+
+        if(student != null){
+            student.setName(body.get("name"));
+            student.setAge(Integer.parseInt(body.get("age")));
+            return studentRepository.save(student);
+        }
+        return null;
     }
 
-    @DeleteMapping("students/remove/{id}")
+    // Delete
+    @DeleteMapping("students/{id}")
     public void delete(@PathVariable("id") long id){
         studentRepository.deleteById(id);
     }
