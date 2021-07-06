@@ -4,6 +4,64 @@ import SendIcon from '@material-ui/icons/Send';
 
 
 class Form extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            firstname: '',
+            lastname: '',
+            birthday: '',
+            status: '1'
+        }
+    }
+
+    handleFirstnameChange = (event) => {
+        this.setState({
+            firstname: event.target.value
+        })
+    }
+    hanfleLastnameChange = (event) => {
+        this.setState({
+            lastname: event.target.value
+        })
+    }
+    handleBirthdayChange = (event) => {
+        this.setState({
+            birthday: event.target.value
+        })
+    }
+    handleStatusChange = (event) => {
+        this.setState({
+            status: event.target.value
+        })
+    }
+
+    async postData() {
+        try{
+            let result = await fetch('https://webhook.site/38082826-26c4-4c60-a58b-74ef8178eeb3', {
+                method: 'post',
+                mode: 'no-cors',
+                headers: {
+                    'Accept': 'aplication/json',
+                    'Content-type': 'aplication/json',
+                },
+                body: JSON.stringify({
+                    firstname: this.state.firstname,
+                    lastname: this.state.lastname,
+                    birthday: this.state.birthday,
+                    status: this.state.status,
+                })
+
+            });
+
+            console.log(result)
+
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
+
     render() {
         return (
             <main>
@@ -14,9 +72,11 @@ class Form extends React.Component {
                             <Grid container spacing={4} justify="center" style= {{marginTop: 20}}>
                                 <Grid item xs={10} sm={5} md={5}>
                                     <TextField 
-                                        label="First Name"
-                                        color="primary"
+                                        label = "First Name"
+                                        color = "primary"
                                         fullWidth
+                                        value = {this.state.firstname}
+                                        onChange = {this.handleFirstnameChange}
                                         required
                                     />
                                 </Grid>
@@ -25,6 +85,8 @@ class Form extends React.Component {
                                         label="Last Name"
                                         color="primary"
                                         fullWidth
+                                        value = {this.state.lastname}
+                                        onChange = {this.hanfleLastnameChange}
                                         required
                                     />
                                 </Grid>
@@ -36,6 +98,8 @@ class Form extends React.Component {
                                             label="Birthday"
                                             defaultValue="2017-05-24"
                                             type="date"
+                                            value = {this.state.birthday}
+                                            onChange = {this.handleBirthdayChange}
                                             required
                                         />
                                     </FormControl>
@@ -44,11 +108,12 @@ class Form extends React.Component {
                                     <FormControl fullWidth>
                                         <InputLabel id={"covid status"}>Covid Status</InputLabel>
                                         <Select
-                                            color="secondary"
+                                            color = "primary"
                                             labelId = "covid status"
                                             lable = "Covid Status"
-                                            required
-                                            
+                                            value = {this.state.status}
+                                            onChange = {this.handleStatusChange}
+                                            required  
                                         >
                                             <MenuItem value={1}>1</MenuItem>
                                             <MenuItem value={2}>2</MenuItem>
@@ -61,7 +126,7 @@ class Form extends React.Component {
                             </Grid>
                             <Grid container spacing={1} justify="center" style= {{marginTop: "10%"}}>
                                 <Grid item>
-                                    <Button variant="contained" color="secondary" endIcon={<SendIcon/>}>Submit</Button>
+                                    <Button variant="contained" color="primary" endIcon={<SendIcon/>} onClick={ () => this.postData() }>Submit</Button>
                                 </Grid>
                             </Grid>
                         </Grid>
