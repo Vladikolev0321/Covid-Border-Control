@@ -2,7 +2,6 @@ import React from 'react';
 import { TextField, Grid, Typography, Select, MenuItem, InputLabel, Button, FormControl} from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-
 class Form extends React.Component {
     constructor(props) {
         super(props)
@@ -104,7 +103,7 @@ class Form extends React.Component {
                                         />
                                     </FormControl>
                                 </Grid>
-                                <Grid item xs={10} sm={5} md={10}style= {{marginTop: "5%"}}>
+                                <Grid item xs={10} sm={5} md={10} style= {{marginTop: "5%"}}>
                                     <FormControl fullWidth>
                                         <InputLabel id={"covid status"}>Covid Status</InputLabel>
                                         <Select
