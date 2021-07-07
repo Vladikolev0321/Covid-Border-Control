@@ -3,6 +3,8 @@ package com.example.demo2.person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 @Component
@@ -30,7 +32,7 @@ public class PersonService {
         if(person != null){
             person.setFirstName(args.get("firstName"));
             person.setLastName(args.get("lastName"));
-            person.setAge(Integer.parseInt(args.get("age")));
+            person.setBirthdate(LocalDate.parse(args.get("birthdate"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             person.setHealthStatus(HealthStatus.valueOf(args.get("healthStatus")));
             return this.save(person);
         }

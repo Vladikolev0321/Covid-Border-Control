@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 public class Person {
@@ -14,18 +15,18 @@ public class Person {
 
     private String firstName;
     private String lastName;
-    private Integer age;
+    private LocalDate birthdate;
     private HealthStatus healthStatus;
 
     public Person(){
 
     }
 
-    public Person(Long id, String firstName, String lastName, Integer age, HealthStatus healthStatus) {
+    public Person(Long id, String firstName, String lastName, LocalDate birthdate, HealthStatus healthStatus) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
+        this.birthdate = birthdate;
         this.healthStatus = healthStatus;
     }
 
@@ -53,12 +54,13 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Integer getAge() {
-        return age;
+
+    public LocalDate getBirthdate() {
+        return birthdate;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
     }
 
     public HealthStatus getHealthStatus() {
