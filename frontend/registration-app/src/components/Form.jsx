@@ -1,38 +1,40 @@
 import React from 'react';
 import { TextField, Grid, Typography, Select, MenuItem, InputLabel, Button, FormControl} from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+import PersonDetails from './PersonDetails';
 
 class Form extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            step: 1,
             firstname: '',
             lastname: '',
             birthday: '',
-            status: '1'
+            status: '1',
+            image: ''
         }
     }
 
-    handleFirstnameChange = (event) => {
+    //next step
+    nextStep = () => {
+        const { step } = this.state;
         this.setState({
-            firstname: event.target.value
-        })
+            step: step + 1
+        });
     }
-    hanfleLastnameChange = (event) => {
+
+    //prev step
+    prevStep = () => {
+        const { step } = this.state;
         this.setState({
-            lastname: event.target.value
-        })
+            step: step - 1
+        });
     }
-    handleBirthdayChange = (event) => {
-        this.setState({
-            birthday: event.target.value
-        })
-    }
-    handleStatusChange = (event) => {
-        this.setState({
-            status: event.target.value
-        })
+
+    // Hadle input change
+    handleChange = input => e => {
+        this.setState({[input]: e.target.value});
     }
 
     async postData() {
@@ -44,97 +46,46 @@ class Form extends React.Component {
                     'Accept': 'aplication/json',
                     'Content-type': 'aplication/json',
                 },
-                body: JSON.stringify({
-                    firstname: this.state.firstname,
-                    lastname: this.state.lastname,
-                    birthday: this.state.birthday,
-                    status: this.state.status,
-                })
-
+                body: JSON.stringify([
+                    {
+                        firstname: this.state.firstname,
+                        lastname: this.state.lastname,
+                        birthday: this.state.birthday,
+                        status: this.state.status,
+                    },
+                    {
+                        image: this.state.image
+                    }
+                ])
             });
-
             console.log(result)
-
+            window.location.reload();
         } catch(e) {
             console.log(e)
         }
     }
-
-
     render() {
-        return (
-            <main>
-                <div>
-                    <Grid container alignItems="center" md={4}>
-                        <Grid item style={{margin: "15%", border: "1px solid black", borderRadius: "25px", padding: "5% 0"}} >
-                            <Typography variant="h3" align="center" color="textPrimary" style={{borderBottom: "1px solid black", paddingBottom: "5%"}}>Register Now</Typography>
-                            <Grid container spacing={4} justify="center" style= {{marginTop: 20}}>
-                                <Grid item xs={10} sm={5} md={5}>
-                                    <TextField 
-                                        label = "First Name"
-                                        color = "primary"
-                                        fullWidth
-                                        value = {this.state.firstname}
-                                        onChange = {this.handleFirstnameChange}
-                                        required
-                                    />
-                                </Grid>
-                                <Grid item xs={10} sm={5} md={5}>
-                                    <TextField 
-                                        label="Last Name"
-                                        color="primary"
-                                        fullWidth
-                                        value = {this.state.lastname}
-                                        onChange = {this.hanfleLastnameChange}
-                                        required
-                                    />
-                                </Grid>
-                                <Grid item xs={10} sm={5} md={10} style= {{marginTop: "5%"}}>
-                                    <FormControl fullWidth >
-                                        <TextField
-                                            id="date"
-                                            color="primary"
-                                            label="Birthday"
-                                            defaultValue="2017-05-24"
-                                            type="date"
-                                            value = {this.state.birthday}
-                                            onChange = {this.handleBirthdayChange}
-                                            required
-                                        />
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={10} sm={5} md={10} style= {{marginTop: "5%"}}>
-                                    <FormControl fullWidth>
-                                        <InputLabel id={"covid status"}>Covid Status</InputLabel>
-                                        <Select
-                                            color = "primary"
-                                            labelId = "covid status"
-                                            lable = "Covid Status"
-                                            value = {this.state.status}
-                                            onChange = {this.handleStatusChange}
-                                            required  
-                                        >
-                                            <MenuItem value={1}>1</MenuItem>
-                                            <MenuItem value={2}>2</MenuItem>
-                                            <MenuItem value={3}>3</MenuItem>
-                                            <MenuItem value={4}>4</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    
-                                </Grid>
-                            </Grid>
-                            <Grid container spacing={1} justify="center" style= {{marginTop: "10%"}}>
-                                <Grid item>
-                                    <Button variant="contained" color="primary" endIcon={<SendIcon/>} onClick={ () => this.postData() }>Submit</Button>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </div>
-                
-            </main>
-            
-        );
+        const { step } = this.state;
+        const { firstname, lastname, birthday, status, image } = this.state;
+        const values = { firstname, lastname, birthday, status, image }
+        switch(step) {
+            case 1:
+                return(
+                    <PersonDetails 
+                        nextStep={this.nextStep}
+                        handleChange={this.handleChange}
+                        values={values}
+                    />
+                );
+            case 2:
+                return(
+                    <Button onClick={ () => this.postData() }>Gosho</Button>
+                );
+            case 3:
+                return(
+                    <h1>kf;kfgo;a</h1>
+                )
+        }
     }
 }
 
