@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.nio.file.Path;
 import java.time.LocalDate;
 
 @Entity
@@ -17,17 +18,27 @@ public class Person {
     private String lastName;
     private LocalDate birthdate;
     private HealthStatus healthStatus;
+    private String imagePath;
 
     public Person(){
 
     }
 
-    public Person(Long id, String firstName, String lastName, LocalDate birthdate, HealthStatus healthStatus) {
+    public Person(Long id, String firstName, String lastName, LocalDate birthdate, HealthStatus healthStatus, Path imagePath) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
         this.healthStatus = healthStatus;
+        this.imagePath = imagePath.toString();
+    }
+
+    public Person(String firstName, String lastName, LocalDate birthdate, HealthStatus healthStatus, Path imagePath) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.healthStatus = healthStatus;
+        this.imagePath = imagePath.toString();
     }
 
     public Long getId() {
@@ -61,6 +72,14 @@ public class Person {
 
     public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public HealthStatus getHealthStatus() {
