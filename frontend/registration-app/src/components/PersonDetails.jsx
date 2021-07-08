@@ -71,7 +71,7 @@ export class PersonDetails extends React.Component {
                             </Grid>
                             <br />
                             <Grid container justify="flex-end">
-                                <Button variant="contained"color="primary" onClick={this.continue} style={{width: "50%"}}>Next</Button>
+                                <Button variant="contained"color="primary" onClick={this.continue} style={{width: "50%"}} size="large">Next</Button>
                             </Grid>
                         </Paper>
                     </Container>

@@ -9,10 +9,10 @@ class Form extends React.Component {
 
         this.state = {
             step: 1,
-            firstname: '',
-            lastname: '',
-            birthday: '',
-            status: '1',
+            firstName: '',
+            lastName: '',
+            birthdate: '',
+            birthdate: '1',
             image: ''
         }
     }
@@ -49,10 +49,10 @@ class Form extends React.Component {
                 },
                 body: JSON.stringify(
                     {
-                        firstname: this.state.firstname,
+                        firstname: this.state.firstName,
                         lastname: this.state.lastname,
-                        birthday: this.state.birthday,
-                        status: this.state.status,
+                        birthday: this.state.birthdate,
+                        status: this.state.healthStatus,
                         image: this.state.image
                     }
                 )
@@ -65,8 +65,8 @@ class Form extends React.Component {
     }
     render() {
         const { step } = this.state;
-        const { firstname, lastname, birthday, status, image } = this.state;
-        const values = { firstname, lastname, birthday, status, image }
+        const { firstName, lastName, birthdate, healthStatus, image } = this.state;
+        const values = { firstName, lastName, birthdate, healthStatus, image  }
         switch(step) {
             case 1:
                 return(
@@ -78,12 +78,7 @@ class Form extends React.Component {
                 );
             case 2:
                 return(
-                    <div>
-                        <Button onClick={ () => this.postData() }>Gosho</Button>
-                        <Container disableGutters={true}>
-                             <WebcamCapture />
-                        </Container>
-                    </div>
+                    <WebcamCapture />
                 );
             case 3:
                 return(
