@@ -26,8 +26,8 @@ export class PersonDetails extends React.Component {
                                         fullWidth
                                         placeholder="Enter your First Name"
                                         label = "First Name"
-                                        onChange={handleChange('firstname')}
-                                        defaultValue={values.firstname}
+                                        onChange={handleChange('firstName')}
+                                        defaultValue={values.firstName}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6} md={6}>
@@ -35,8 +35,8 @@ export class PersonDetails extends React.Component {
                                         fullWidth
                                         placeholder="Enter your Last Name"
                                         label = "Last Name"
-                                        onChange={handleChange('lastname')}
-                                        defaultValue={values.lastname}
+                                        onChange={handleChange('lastName')}
+                                        defaultValue={values.lastName}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} style= {{marginTop: "5%"}}>
@@ -45,8 +45,8 @@ export class PersonDetails extends React.Component {
                                     <TextField
                                         fullWidth
                                         format={'DD/MM/YYYY'}
-                                        defaultValue ={values.birthday}
-                                        onChange={handleChange('birthday')}
+                                        defaultValue ={values.birthdate}
+                                        onChange={handleChange('birthdate')}
                                         type="date"
                                     />
                                 </Grid>
@@ -58,14 +58,14 @@ export class PersonDetails extends React.Component {
                                         color = "primary"
                                         labelId = "covid status"
                                         lable = "Covid Status"
-                                        value = {values.status}
-                                        onChange = {handleChange('status')}
+                                        value = {values.healthStatus}
+                                        onChange = {handleChange('healthStatus')}
                                         required  
                                     >
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={2}>2</MenuItem>
-                                        <MenuItem value={3}>3</MenuItem>
-                                        <MenuItem value={4}>4</MenuItem>
+                                        <MenuItem value={'NONE'}>None</MenuItem>
+                                        <MenuItem value={'RECENTLY_INFECTED'}>Recently Infected</MenuItem>
+                                        <MenuItem value={'RECENTLY_VACCINATED'}>Recently Vaccinated</MenuItem>
+                                        <MenuItem value={'RECENTLY_INFECTED_AND_VACCINATED'}>Recently Infected and Vaccinated</MenuItem>
                                     </Select>
                                 </Grid>
                             </Grid>
@@ -73,11 +73,6 @@ export class PersonDetails extends React.Component {
                             <Grid container justify="flex-end">
                                 <Button variant="contained"color="primary" onClick={this.continue} style={{width: "50%"}}>Next</Button>
                             </Grid>
-                            {values.status}<br />
-                            {values.firstname}<br />
-                            {values.lastname}<br />
-                            {values.birthday}<br />
-                            {values.image}<br />
                         </Paper>
                     </Container>
                 </React.Fragment>
