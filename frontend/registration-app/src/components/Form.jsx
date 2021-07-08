@@ -46,17 +46,15 @@ class Form extends React.Component {
                     'Accept': 'aplication/json',
                     'Content-type': 'aplication/json',
                 },
-                body: JSON.stringify([
+                body: JSON.stringify(
                     {
                         firstname: this.state.firstname,
                         lastname: this.state.lastname,
                         birthday: this.state.birthday,
                         status: this.state.status,
-                    },
-                    {
                         image: this.state.image
                     }
-                ])
+                )
             });
             console.log(result)
             window.location.reload();
