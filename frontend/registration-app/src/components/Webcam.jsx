@@ -11,7 +11,7 @@ const videoConstraints = {
 
 
 
-export const WebcamCapture = () => {
+export const WebcamCapture = ({nextStep, prevStep}) => {
 
     const [image,setImage]=useState('');
     const webcamRef = React.useRef(null);
@@ -22,10 +22,6 @@ export const WebcamCapture = () => {
             const imageSrc = webcamRef.current.getScreenshot();
             setImage(imageSrc)
         });
-    const myContinue = e => {
-        e.preventDefault();
-        this.props.nextStep();
-    }
         
 
     return (
@@ -76,13 +72,8 @@ export const WebcamCapture = () => {
                     <br />
                     <br />
                     <Grid container spacing={6} justify="center" >
-                        <Button variant="contained" color="secondary" size="large" style={{width: "30%", marginRight: "25%"}} >Back</Button>
-                        <Button variant="contained" color="primary" size="large" style={{width: "30%"}} onClick={ (e) => {
-                            e.preventDefault();
-                            this.props.nextStep();
-                        }
-
-                        }>Next</Button>
+                        <Button variant="contained" color="secondary" size="large" style={{width: "30%", marginRight: "25%"}} onClick={prevStep} >Back</Button>
+                        <Button variant="contained" color="primary" size="large" style={{width: "30%"}} onClick={nextStep}>Next</Button>
                     </Grid>
                     <br />
                     <br />

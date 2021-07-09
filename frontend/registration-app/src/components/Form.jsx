@@ -79,7 +79,10 @@ class Form extends React.Component {
             case 2:
                 return(
                     <div>
-                        <WebcamCapture nextStep={this.nextStep}/>
+                        <WebcamCapture 
+                        nextStep={this.nextStep} 
+                        prevStep={this.prevStep}
+                        />
                         <Button onClick={ () => this.postData() }>Gosho</Button>
                     </div>
                     
