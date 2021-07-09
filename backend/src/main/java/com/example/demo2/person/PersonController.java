@@ -1,8 +1,11 @@
 package com.example.demo2.person;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,8 +13,10 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @RestController
 public class PersonController {
 
@@ -32,8 +37,15 @@ public class PersonController {
         return service.getAll();
     }
 
-    @PostMapping("/person/create")
-    public void createPerson(@RequestBody Map<String, String> personMap) throws IOException {
+    @RequestMapping(value="person/create", method = RequestMethod.POST, consumes = "text/plain")
+    @ResponseBody
+    public void createPerson(@RequestBody String s) throws IOException {
+
+        System.out.println(s);
+        ObjectMapper o = new ObjectMapper();
+        Map<String, String> personMap = o.readValue(s, Map.class);
+
+        System.out.println(personMap);
 
         String firstName = personMap.get("firstName");
         String lastName = personMap.get("lastName");
@@ -50,12 +62,11 @@ public class PersonController {
 
         Path imagePath = Path.of(".\\uploads\\" + firstName + "_" + lastName + "_" + birthDate + ".jpg");
 
-
-        System.out.println(imagePath.toString());
         Files.write(imagePath, imageBytes);
 
         service.save(new Person(firstName, lastName, birthDate, healthStatus, imagePath));
     }
+
 
     @GetMapping("/person/{id}")
     public Person getPerson(@PathVariable("id") Long id){
