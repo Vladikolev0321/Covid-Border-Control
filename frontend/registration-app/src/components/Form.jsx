@@ -13,7 +13,7 @@ class Form extends React.Component {
             lastName: '',
             birthdate: '',
             healthStatus: '',
-            image: 'sryn,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaLKNJKOPUIOYUTYRTERSFXHCGVJHBKobhovwehwvr919ar1b8e41bet48rbrb4tb1r8v7b1rb8rb8a'
+            image: ''
         }
     }
 
@@ -88,6 +88,7 @@ class Form extends React.Component {
                         nextStep={this.nextStep} 
                         prevStep={this.prevStep}
                         handleImageChange={this.handleImageChange}
+                        defaultImage={this.state.image}
                         />
                         <Button onClick={ () => this.postData() }>Gosho</Button>
                     </div>
