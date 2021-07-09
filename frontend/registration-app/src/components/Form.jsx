@@ -38,9 +38,14 @@ class Form extends React.Component {
         this.setState({[input]: e.target.value});
     }
 
+    // Handle Image change
+    handleImageChange = (newImage) => {
+        this.setState({image: newImage})
+    }
+
     async postData() {
         try{
-            let result = await fetch('http://18.188.29.87:8081/person/create', {
+            let result = await fetch('http://3.140.105.132:8081/person/create', {
                 method: 'post',
                 mode: 'no-cors',
                 headers: {
@@ -82,6 +87,7 @@ class Form extends React.Component {
                         <WebcamCapture 
                         nextStep={this.nextStep} 
                         prevStep={this.prevStep}
+                        handleImageChange={this.handleImageChange}
                         />
                         <Button onClick={ () => this.postData() }>Gosho</Button>
                     </div>
