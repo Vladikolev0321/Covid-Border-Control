@@ -16,16 +16,12 @@ export const WebcamCapture = ({nextStep, prevStep, handleImageChange}) => {
     const [image,setImage]=useState('');
     const webcamRef = React.useRef(null);
 
-    const sendImage = (imageN) => {
-        handleImageChange(imageN);
-    }
-
     const capture = React.useCallback(
         () => {
             const imageSrc = webcamRef.current.getScreenshot();
             setImage(imageSrc)
-            sendImage(imageSrc);
-        });
+            handleImageChange(imageSrc)
+        }, [handleImageChange]);
     
     
         

@@ -45,7 +45,7 @@ class Form extends React.Component {
 
     async postData() {
         try{
-            let result = await fetch('http://3.140.105.132:8081/person/create', {
+            let result = await fetch('https://webhook.site/24349262-5cfb-4e8c-a8da-d95846aecf09', {
                 method: 'post',
                 mode: 'no-cors',
                 headers: {
@@ -96,7 +96,8 @@ class Form extends React.Component {
             case 3:
                 return(
                     <h1>kf;kfgo;a</h1>
-                )
+                );
+            default:
         }
     }
 }
