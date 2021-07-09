@@ -12,8 +12,8 @@ class Form extends React.Component {
             firstName: '',
             lastName: '',
             birthdate: '',
-            birthdate: '1',
-            image: ''
+            healthStatus: '',
+            image: 'sryn,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaLKNJKOPUIOYUTYRTERSFXHCGVJHBKobhovwehwvr919ar1b8e41bet48rbrb4tb1r8v7b1rb8rb8a'
         }
     }
 
@@ -40,7 +40,7 @@ class Form extends React.Component {
 
     async postData() {
         try{
-            let result = await fetch('https://webhook.site/38082826-26c4-4c60-a58b-74ef8178eeb3', {
+            let result = await fetch('http://18.188.29.87:8081/person/create', {
                 method: 'post',
                 mode: 'no-cors',
                 headers: {
@@ -49,10 +49,10 @@ class Form extends React.Component {
                 },
                 body: JSON.stringify(
                     {
-                        firstname: this.state.firstName,
-                        lastname: this.state.lastname,
-                        birthday: this.state.birthdate,
-                        status: this.state.healthStatus,
+                        firstName: this.state.firstName,
+                        lastName: this.state.lastName,
+                        birthdate: this.state.birthdate,
+                        healthStatus: this.state.healthStatus,
                         image: this.state.image
                     }
                 )
@@ -78,7 +78,11 @@ class Form extends React.Component {
                 );
             case 2:
                 return(
-                    <WebcamCapture />
+                    <div>
+                        <WebcamCapture nextStep={this.nextStep}/>
+                        <Button onClick={ () => this.postData() }>Gosho</Button>
+                    </div>
+                    
                 );
             case 3:
                 return(

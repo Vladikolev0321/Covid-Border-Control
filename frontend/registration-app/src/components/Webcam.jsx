@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import Webcam from "react-webcam";
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import {Container, CssBaseline, Grid, Button, Paper} from "@material-ui/core";
-import { borders } from '@material-ui/system'
 
 const videoConstraints = {
     width: 800,
     height: 500,
     facingMode: "user"
 };
+
+
 
 export const WebcamCapture = () => {
 
@@ -21,7 +22,11 @@ export const WebcamCapture = () => {
             const imageSrc = webcamRef.current.getScreenshot();
             setImage(imageSrc)
         });
-
+    const myContinue = e => {
+        e.preventDefault();
+        this.props.nextStep();
+    }
+        
 
     return (
         <React.Fragment>
@@ -72,7 +77,12 @@ export const WebcamCapture = () => {
                     <br />
                     <Grid container spacing={6} justify="center" >
                         <Button variant="contained" color="secondary" size="large" style={{width: "30%", marginRight: "25%"}} >Back</Button>
-                        <Button variant="contained" color="primary" size="large" style={{width: "30%"}}>Next</Button>
+                        <Button variant="contained" color="primary" size="large" style={{width: "30%"}} onClick={ (e) => {
+                            e.preventDefault();
+                            this.props.nextStep();
+                        }
+
+                        }>Next</Button>
                     </Grid>
                     <br />
                     <br />
