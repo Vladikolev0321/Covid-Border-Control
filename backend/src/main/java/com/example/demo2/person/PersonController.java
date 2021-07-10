@@ -1,5 +1,6 @@
 package com.example.demo2.person;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -39,11 +40,11 @@ public class PersonController {
 
     @RequestMapping(value="person/create", method = RequestMethod.POST, consumes = "text/plain")
     @ResponseBody
-    public void createPerson(@RequestBody String s) throws IOException {
+    public void createPerson(@RequestBody String givenString) throws IOException {
 
-        System.out.println(s);
+        System.out.println(givenString);
         ObjectMapper o = new ObjectMapper();
-        Map<String, String> personMap = o.readValue(s, Map.class);
+        Map<String, String> personMap = o.readValue(givenString, Map.class);
 
         System.out.println(personMap);
 
@@ -67,6 +68,27 @@ public class PersonController {
         service.save(new Person(firstName, lastName, birthDate, healthStatus, imagePath));
     }
 
+    @RequestMapping(value = "person/check", method = RequestMethod.POST, consumes = "text/plain")
+    public void checkPerson(@RequestBody String givenString) throws IOException {
+        System.out.println(givenString);
+        ObjectMapper o = new ObjectMapper();
+        Map<String, String> personMap = o.readValue(givenString, Map.class);
+
+        System.out.println(personMap);
+
+
+        String imageInB64 = personMap.get("image"); // B64 string encoded
+
+
+        String base64Image = imageInB64.split(",")[1];
+        byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+
+        Path imagePath = Path.of(".\\uploads\\" + "_out"+ ".jpg");
+
+//        Files.write(imagePath, imageBytes);
+//
+//        service.save(new Person(firstName, lastName, birthDate, healthStatus, imagePath));
+    }
 
     @GetMapping("/person/{id}")
     public Person getPerson(@PathVariable("id") Long id){

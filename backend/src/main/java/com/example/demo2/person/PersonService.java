@@ -40,6 +40,10 @@ public class PersonService {
         return null;
     }
 
+    public void checkPerson(){
+
+    }
+
     public void deletePerson(Long id){
         repo.delete(this.getPersonByID(id));
     }
