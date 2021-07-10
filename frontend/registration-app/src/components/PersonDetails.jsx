@@ -1,6 +1,8 @@
 import React from 'react';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { CssBaseline, Paper, Container, TextField, Typography, Grid, InputLabel, Select, MenuItem, Button } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+
 export class PersonDetails extends React.Component {
     continue = e => {
         e.preventDefault();
@@ -8,15 +10,24 @@ export class PersonDetails extends React.Component {
     }
     render() { 
         const { values, handleChange } = this.props;
-        
+        const renderAlert = () => {
+            if(values.alert === 1) {
+                return <div>
+                    <Alert severity="error" variant="filled" >
+                        You must fill in all the information!
+                    </Alert> 
+                    <br /> 
+                </div>
+            }
+        }
         return (
             <MuiThemeProvider>
                 <React.Fragment>
-                    <Container  style={{marginTop: "3%"}} maxWidth="sm">
+                    <Container  style={{marginTop: "2%"}} maxWidth="sm">
                         <CssBaseline />
                         <Paper style={{padding: "8%"}} elevation={12}>
-                            <Typography variant="h3" color="textPrimary" align="center" >Person Details</Typography>
-                            <br/>
+                            {renderAlert()}
+                            <Typography variant="h4" color="textPrimary" align="center" >Person Details</Typography>
                             <br/>
                             <hr/>
                             <br />
@@ -28,6 +39,7 @@ export class PersonDetails extends React.Component {
                                         label = "First Name"
                                         onChange={handleChange('firstName')}
                                         defaultValue={values.firstName}
+                                        required
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6} md={6}>
@@ -37,10 +49,11 @@ export class PersonDetails extends React.Component {
                                         label = "Last Name"
                                         onChange={handleChange('lastName')}
                                         defaultValue={values.lastName}
+                                        required
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={12} md={12} style= {{marginTop: "5%"}}>
-                                    <InputLabel>Birthday</InputLabel>
+                                <Grid item xs={12} sm={12} md={12}>
+                                    <InputLabel required>Birthdate</InputLabel>
                                     <br />
                                     <TextField
                                         fullWidth
@@ -48,19 +61,17 @@ export class PersonDetails extends React.Component {
                                         defaultValue ={values.birthdate}
                                         onChange={handleChange('birthdate')}
                                         type="date"
+                                        required
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={12} md={12} style= {{marginTop: "5%"}}>
-                                    <InputLabel>Covid status</InputLabel>
+                                <Grid item xs={12} sm={12} md={12}>
+                                    <InputLabel required>Covid status</InputLabel>
                                     <br />
                                     <Select
                                         fullWidth
                                         color = "primary"
-                                        labelId = "covid status"
-                                        lable = "Covid Status"
                                         value = {values.healthStatus}
-                                        onChange = {handleChange('healthStatus')}
-                                        required  
+                                        onChange = {handleChange('healthStatus')} 
                                     >
                                         <MenuItem value={'NONE'}>None</MenuItem>
                                         <MenuItem value={'RECENTLY_INFECTED'}>Recently Infected</MenuItem>
@@ -69,6 +80,7 @@ export class PersonDetails extends React.Component {
                                     </Select>
                                 </Grid>
                             </Grid>
+                            <br />
                             <br />
                             <Grid container justify="flex-end">
                                 <Button variant="contained"color="primary" onClick={this.continue} style={{width: "50%"}} size="large">Next</Button>
