@@ -53,7 +53,7 @@ class Form extends React.Component {
         });
     }
 
-    // Hadle input change
+    // Handle input change
     handleChange = input => e => {
         this.setState({[input]: e.target.value});
     }
@@ -69,8 +69,8 @@ class Form extends React.Component {
                 method: 'post',
                 mode: 'no-cors',
                 headers: {
-                    'Accept': 'aplication/json',
-                    'Content-type': 'aplication/json',
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
                 },
                 body: JSON.stringify(
                     {
