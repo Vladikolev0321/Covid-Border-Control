@@ -16,7 +16,7 @@ public class Demo2Application {
         SpringApplication.run(Demo2Application.class, args);
 
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        String imgFile = "uploads/stelian_tegav.png";
+        String imgFile = "uploads/ivan_proba2.png";
         Mat src = Imgcodecs.imread(imgFile);
 
         String xmlFile = "xml/lbpcascade_frontalface.xml";
@@ -33,7 +33,7 @@ public class Demo2Application {
      //   if(faceDetection.toArray().length != 1){
             System.out.println("Take another picture");
      //   }else{
-            Imgcodecs.imwrite("uploads/stelian_tegav_out.png", src);
+            Imgcodecs.imwrite("uploads/ivan_proba2_out.png", src);
             System.out.println("Image Detection Finished");
 
      //   }
