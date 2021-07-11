@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PersonController {
@@ -83,20 +82,42 @@ public class PersonController {
         String base64Image = imageInB64.split(",")[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
 
-        Path imagePath = Path.of(".\\uploads\\" + "_received"+ ".jpg");
+        int counter = service.getCounter();
+        Path imagePath = Path.of(".\\uploads\\" + "_received" + counter + ".jpg");
 
         Files.write(imagePath, imageBytes);
 
         String basePicPath = "uploads\\";
 
+        Set<String> allFilesNamesInUploadsFolder = service.listFilesUsingDirectoryStream(basePicPath, imagePath);
 
-        double compareHist = service.compare_image(imagePath.toString(), basePicPath + "ivan_proba.png");
-        System.out.println(compareHist);
-        if (compareHist > 0.72) {
-            System.out.println("face matching");
+        String nameOfTheMostComparableImage = null;
+        double maxAccuracy = 0;
+        for (String currFileName : allFilesNamesInUploadsFolder){
+
+            System.out.println(currFileName);
+            double compareHist = service.compare_image(imagePath.toString(), basePicPath + currFileName);
+            if(compareHist > maxAccuracy){
+                nameOfTheMostComparableImage = currFileName;
+                maxAccuracy = compareHist;
+            }
+        }
+        if (maxAccuracy > 0.72) {
+            System.out.println("face matching with image:" + nameOfTheMostComparableImage + " with " + maxAccuracy*100);
         } else {
             System.out.println("Face does not match");
         }
+
+        service.searchPersonWithThisImagePath(nameOfTheMostComparableImage);
+
+
+//        double compareHist = service.compare_image(imagePath.toString(), basePicPath + "ivan_proba.png");
+//        System.out.println(compareHist);
+//        if (compareHist > 0.72) {
+//            System.out.println("face matching");
+//        } else {
+//            System.out.println("Face does not match");
+//        }
 
 
         Files.delete(imagePath);

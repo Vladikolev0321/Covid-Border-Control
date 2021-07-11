@@ -7,11 +7,15 @@ import org.opencv.objdetect.CascadeClassifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 @Component
 public class PersonService {
 
@@ -44,11 +48,16 @@ public class PersonService {
 
         return null;
     }
-    static CascadeClassifier faceDetector;
+    private static CascadeClassifier faceDetector;
+    private static int counter = 0;
 
     static {
      //   System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         faceDetector = new CascadeClassifier("xml/haarcascade_frontalface_alt.xml");
+    }
+
+    public static int getCounter() {
+        return ++counter;
     }
 
     // grayscale face and return only the face part of the image as a Mat object
@@ -87,6 +96,27 @@ public class PersonService {
         double res = Imgproc.compareHist(hist_1, hist_2, Imgproc.CV_COMP_CORREL);
         return res;
     }
+
+    // list all files names for given directory
+    public Set<String> listFilesUsingDirectoryStream(String dir, Path currImage) throws IOException {
+        Set<String> fileList = new HashSet<>();
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir))) {
+            for (Path path : stream) {
+                if (!Files.isDirectory(path) && !path.getFileName().equals(currImage.getFileName())) {
+                    fileList.add(path.getFileName()
+                            .toString());
+                }
+            }
+        }
+        return fileList;
+    }
+
+    // search user with this image path
+    public void searchPersonWithThisImagePath(String imageName){
+
+
+    }
+
 
     public void deletePerson(Long id){
         repo.delete(this.getPersonByID(id));
