@@ -17,7 +17,7 @@ public class FaceCompare {
         SpringApplication.run(FaceCompare.class, args);
 
         String basePicPath = "uploads\\";
-        double compareHist = compare_image(basePicPath + "ivan_tegav.png", basePicPath + "ivan_proba2.png");
+        double compareHist = compare_image(basePicPath + "ivan_proba2.png", basePicPath + "ivan_proba.png");
         System.out.println(compareHist);
         if (compareHist > 0.72) {
             System.out.println("face matching");

@@ -70,11 +70,11 @@ public class PersonController {
 
     @RequestMapping(value = "person/check", method = RequestMethod.POST, consumes = "text/plain")
     public void checkPerson(@RequestBody String givenString) throws IOException {
-        System.out.println(givenString);
+       // System.out.println(givenString);
         ObjectMapper o = new ObjectMapper();
         Map<String, String> personMap = o.readValue(givenString, Map.class);
 
-        System.out.println(personMap);
+       // System.out.println(personMap);
 
 
         String imageInB64 = personMap.get("image"); // B64 string encoded
@@ -83,9 +83,23 @@ public class PersonController {
         String base64Image = imageInB64.split(",")[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
 
-        Path imagePath = Path.of(".\\uploads\\" + "_out"+ ".jpg");
+        Path imagePath = Path.of(".\\uploads\\" + "_received"+ ".jpg");
 
-//        Files.write(imagePath, imageBytes);
+        Files.write(imagePath, imageBytes);
+
+        String basePicPath = "uploads\\";
+
+
+        double compareHist = service.compare_image(imagePath.toString(), basePicPath + "ivan_proba.png");
+        System.out.println(compareHist);
+        if (compareHist > 0.72) {
+            System.out.println("face matching");
+        } else {
+            System.out.println("Face does not match");
+        }
+
+
+        Files.delete(imagePath);
 //
 //        service.save(new Person(firstName, lastName, birthDate, healthStatus, imagePath));
     }
