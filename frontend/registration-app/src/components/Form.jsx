@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Container, Paper, Typography, CssBaseline, Grid, TextField } from '@material-ui/core';
 import PersonDetails from './PersonDetails';
 import {WebcamCapture} from "./Webcam";
+import axios from 'axios';
 
 class Form extends React.Component {
     constructor(props) {
@@ -64,29 +65,15 @@ class Form extends React.Component {
     }
 
     async postData() {
-        try{
-            let result = await fetch('https://webhook.site/38082826-26c4-4c60-a58b-74ef8178eeb3', {
-                method: 'post',
-                mode: 'no-cors',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-type': 'application/json',
-                },
-                body: JSON.stringify(
-                    {
-                        firstName: this.state.firstName,
-                        lastName: this.state.lastName,
-                        birthdate: this.state.birthdate,
-                        healthStatus: this.state.healthStatus,
-                        image: this.state.image
-                    }
-                )
-            });
-            console.log(result)
-            window.location.reload();
-        } catch(e) {
-            console.log(e)
+        const content = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            birthdate: this.state.birthdate,
+            healthStatus: this.state.healthStatus,
+            image: this.state.image
         }
+        const response = await axios.post('http://3.140.105.132:8081/person/create', content)
+        console.log(response)
     }
     render() {
         const { step } = this.state;
