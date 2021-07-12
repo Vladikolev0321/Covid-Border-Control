@@ -1,15 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import Bar from './components/Bar';
-import { WebcamCapture } from './components/Webcam';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <>
-    <Bar />
-    <WebcamCapture />
-    </>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
