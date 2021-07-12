@@ -3,6 +3,7 @@ import Webcam from "react-webcam";
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import {Container, CssBaseline, Grid, Button, Paper, Typography } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
+import axios from 'axios';
 
 const videoConstraints = {
     width: 800,
@@ -12,7 +13,7 @@ const videoConstraints = {
 
 
 
-export const WebcamCapture = ({nextStep, prevStep, handleImageChange, defaultImage, alert}) => {
+export const WebcamCaptureSubmit = ({prevStep, handleImageChange, defaultImage, alert}) => {
 
     const [image,setImage]=useState(defaultImage);
     const webcamRef = React.useRef(null);
@@ -34,6 +35,14 @@ export const WebcamCapture = ({nextStep, prevStep, handleImageChange, defaultIma
             </div>
         }
     }
+
+    const postData = async () => {
+        const content = {
+            image: defaultImage
+        }
+        const response = await axios.post('https://webhook.site/437f35dd-9219-4550-990f-5162bbcaf5c9', content)
+        console.log(response)
+    }
     
     
         
@@ -44,7 +53,7 @@ export const WebcamCapture = ({nextStep, prevStep, handleImageChange, defaultIma
                 <CssBaseline />
                 <Paper style={{padding: "8%"}} elevation={12}>
                     {renderAlert()}
-                    <Typography variant="h4" color="textPrimary" align="center" >Take a picture</Typography>
+                    <Typography variant="h4" color="textPrimary" align="center" >Are you sure you want to verify with this picture?</Typography>
                     <br />
                     <hr />
                     <br />
@@ -65,14 +74,27 @@ export const WebcamCapture = ({nextStep, prevStep, handleImageChange, defaultIma
                             direction="column"
                             justifyContent="center"
                             alignItems="center">
+                        {image !== '' ?
+                            <Button variant="contained" color="primary" size="large" startIcon={< CameraAltIcon />} onClick={(e) => {
+                                e.preventDefault();
+                                setImage('');
+                                prevStep();
+                            }}
+                                    className="webcam-btn">
+                                Retake Image</Button> :
                             <Button variant="contained" color="primary" size="large" startIcon={< CameraAltIcon />} onClick={(e) => {
                                 e.preventDefault();
                                 capture();
-                                nextStep();
                             }}
                                     className="webcam-btn">Capture</Button>
+                        }
                     </Grid>
-                    
+                    <br />
+                    <br />
+                    <br />
+                    <Grid container spacing={6} justify="center" >
+                        <Button variant="contained" color="primary" size="large" style={{width: "30%"}} onClick={postData.bind(this)}>Verify</Button>
+                    </Grid>
                 </Paper>
             </Container>
         </React.Fragment>
