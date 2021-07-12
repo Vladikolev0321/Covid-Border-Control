@@ -52,7 +52,7 @@ public class PersonService {
     private static int counter = 0;
 
     static {
-     //   System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+       // System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         faceDetector = new CascadeClassifier("xml/haarcascade_frontalface_alt.xml");
     }
 
@@ -112,10 +112,11 @@ public class PersonService {
     }
 
     // search user with this image path
-    public void searchPersonWithThisImagePath(String imageName){
+    public Person searchPersonWithThisImagePath(String imageName){
         //System.out.println(imageName);
         Person personWithThisImagePath = repo.findByImagePath(".\\uploads\\" + imageName);
         System.out.println(personWithThisImagePath);
+        return personWithThisImagePath;
     }
 
 

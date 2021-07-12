@@ -33,6 +33,7 @@ public class PersonController {
     }
 
     @GetMapping("/test")
+    @ResponseBody
     public List<Person> getPeople(){
         return service.getAll();
     }
@@ -68,7 +69,8 @@ public class PersonController {
     }
 
     @RequestMapping(value = "person/check", method = RequestMethod.POST, consumes = "text/plain")
-    public void checkPerson(@RequestBody String givenString) throws IOException {
+    @ResponseBody
+    public Person checkPerson(@RequestBody String givenString) throws IOException {
        // System.out.println(givenString);
         ObjectMapper o = new ObjectMapper();
         Map<String, String> personMap = o.readValue(givenString, Map.class);
@@ -108,10 +110,12 @@ public class PersonController {
             System.out.println("Face does not match");
         }
 
-        service.searchPersonWithThisImagePath(nameOfTheMostComparableImage);
+        Person personWithThisImagePath = service.searchPersonWithThisImagePath(nameOfTheMostComparableImage);
 
 
         Files.delete(imagePath);
+
+        return personWithThisImagePath;
     }
 
     @GetMapping("/person/{id}")
