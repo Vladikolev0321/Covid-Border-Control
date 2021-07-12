@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PersonController {
@@ -34,6 +33,7 @@ public class PersonController {
     }
 
     @GetMapping("/test")
+    @ResponseBody
     public List<Person> getPeople(){
         return service.getAll();
     }
@@ -42,11 +42,11 @@ public class PersonController {
     @ResponseBody
     public void createPerson(@RequestBody String givenString) throws IOException {
 
-        System.out.println(givenString);
+       // System.out.println(givenString);
         ObjectMapper o = new ObjectMapper();
         Map<String, String> personMap = o.readValue(givenString, Map.class);
 
-        System.out.println(personMap);
+       // System.out.println(personMap);
 
         String firstName = personMap.get("firstName");
         String lastName = personMap.get("lastName");
@@ -69,7 +69,8 @@ public class PersonController {
     }
 
     @RequestMapping(value = "person/check", method = RequestMethod.POST, consumes = "text/plain")
-    public void checkPerson(@RequestBody String givenString) throws IOException {
+    @ResponseBody
+    public Person checkPerson(@RequestBody String givenString) throws IOException {
        // System.out.println(givenString);
         ObjectMapper o = new ObjectMapper();
         Map<String, String> personMap = o.readValue(givenString, Map.class);
@@ -83,25 +84,38 @@ public class PersonController {
         String base64Image = imageInB64.split(",")[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
 
-        Path imagePath = Path.of(".\\uploads\\" + "_received"+ ".jpg");
+        int counter = service.getCounter();
+        Path imagePath = Path.of(".\\uploads\\" + "_received" + counter + ".jpg");
 
         Files.write(imagePath, imageBytes);
 
         String basePicPath = "uploads\\";
 
+        Set<String> allFilesNamesInUploadsFolder = service.listFilesUsingDirectoryStream(basePicPath, imagePath);
 
-        double compareHist = service.compare_image(imagePath.toString(), basePicPath + "ivan_proba.png");
-        System.out.println(compareHist);
-        if (compareHist > 0.72) {
-            System.out.println("face matching");
+        String nameOfTheMostComparableImage = null;
+        double maxAccuracy = 0;
+        for (String currFileName : allFilesNamesInUploadsFolder){
+
+            //System.out.println(currFileName);
+            double compareHist = service.compare_image(imagePath.toString(), basePicPath + currFileName);
+            if(compareHist > maxAccuracy){
+                nameOfTheMostComparableImage = currFileName;
+                maxAccuracy = compareHist;
+            }
+        }
+        if (maxAccuracy > 0.72) {
+            System.out.println("face matching with image:" + nameOfTheMostComparableImage + " with " + maxAccuracy*100);
         } else {
             System.out.println("Face does not match");
         }
 
+        Person personWithThisImagePath = service.searchPersonWithThisImagePath(nameOfTheMostComparableImage);
+
 
         Files.delete(imagePath);
-//
-//        service.save(new Person(firstName, lastName, birthDate, healthStatus, imagePath));
+
+        return personWithThisImagePath;
     }
 
     @GetMapping("/person/{id}")
