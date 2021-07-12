@@ -65,7 +65,7 @@ class Form extends React.Component {
 
     async postData() {
         try{
-            let result = await fetch('https://webhook.site/24349262-5cfb-4e8c-a8da-d95846aecf09', {
+            let result = await fetch('https://webhook.site/38082826-26c4-4c60-a58b-74ef8178eeb3', {
                 method: 'post',
                 mode: 'no-cors',
                 headers: {
@@ -173,7 +173,7 @@ class Form extends React.Component {
                             <br />
                             <Grid container spacing={6} justify="center" >
                                 <Button variant="contained" color="secondary" size="large" style={{width: "45%", marginRight: "10%"}} onClick={this.prevStep} >Back</Button>
-                                <Button variant="contained" color="primary" size="large" style={{width: "45%"}} onClick={this.postData}>Submit</Button>
+                                <Button variant="contained" color="primary" size="large" style={{width: "45%"}} onClick={this.postData.bind(this)}>Submit</Button>
                             </Grid>
                         </Paper>
                     </Container>
