@@ -52,7 +52,7 @@ public class PersonService {
     private static int counter = 0;
 
     static {
-     //   System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+       // System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         faceDetector = new CascadeClassifier("xml/haarcascade_frontalface_alt.xml");
     }
 
