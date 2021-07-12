@@ -41,11 +41,11 @@ public class PersonController {
     @ResponseBody
     public void createPerson(@RequestBody String givenString) throws IOException {
 
-        System.out.println(givenString);
+       // System.out.println(givenString);
         ObjectMapper o = new ObjectMapper();
         Map<String, String> personMap = o.readValue(givenString, Map.class);
 
-        System.out.println(personMap);
+       // System.out.println(personMap);
 
         String firstName = personMap.get("firstName");
         String lastName = personMap.get("lastName");
@@ -95,7 +95,7 @@ public class PersonController {
         double maxAccuracy = 0;
         for (String currFileName : allFilesNamesInUploadsFolder){
 
-            System.out.println(currFileName);
+            //System.out.println(currFileName);
             double compareHist = service.compare_image(imagePath.toString(), basePicPath + currFileName);
             if(compareHist > maxAccuracy){
                 nameOfTheMostComparableImage = currFileName;
@@ -111,18 +111,7 @@ public class PersonController {
         service.searchPersonWithThisImagePath(nameOfTheMostComparableImage);
 
 
-//        double compareHist = service.compare_image(imagePath.toString(), basePicPath + "ivan_proba.png");
-//        System.out.println(compareHist);
-//        if (compareHist > 0.72) {
-//            System.out.println("face matching");
-//        } else {
-//            System.out.println("Face does not match");
-//        }
-
-
         Files.delete(imagePath);
-//
-//        service.save(new Person(firstName, lastName, birthDate, healthStatus, imagePath));
     }
 
     @GetMapping("/person/{id}")

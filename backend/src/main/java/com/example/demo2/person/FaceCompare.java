@@ -33,7 +33,7 @@ public class FaceCompare {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         faceDetector = new CascadeClassifier("xml/haarcascade_frontalface_alt.xml");
     }
-    // grayscale face
+    // returns grayscale face Mat
     public static Mat conv_Mat(String img) {
         Mat image0 = Imgcodecs.imread(img);
 
@@ -62,6 +62,7 @@ public class FaceCompare {
         //Histogram size, the bigger the match, the more accurate (slower)
         MatOfInt histSize = new MatOfInt(1000);
 
+        // transforms the face into histogram
         Imgproc.calcHist(Arrays.asList(face_1), new MatOfInt(0), new Mat(), hist_1, histSize, ranges);
         Imgproc.calcHist(Arrays.asList(face_2), new MatOfInt(0), new Mat(), hist_2, histSize, ranges);
 

@@ -113,8 +113,9 @@ public class PersonService {
 
     // search user with this image path
     public void searchPersonWithThisImagePath(String imageName){
-
-
+        //System.out.println(imageName);
+        Person personWithThisImagePath = repo.findByImagePath(".\\uploads\\" + imageName);
+        System.out.println(personWithThisImagePath);
     }
 
 

@@ -24,6 +24,7 @@ public class Person {
 
     }
 
+
     public Person(Long id, String firstName, String lastName, LocalDate birthdate, HealthStatus healthStatus, Path imagePath) {
         this.id = id;
         this.firstName = firstName;
@@ -88,5 +89,18 @@ public class Person {
 
     public void setHealthStatus(HealthStatus healthStatus) {
         this.healthStatus = healthStatus;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthdate=" + birthdate +
+                ", healthStatus=" + healthStatus +
+                ", imagePath='" + imagePath + '\'' +
+                '}';
     }
 }
