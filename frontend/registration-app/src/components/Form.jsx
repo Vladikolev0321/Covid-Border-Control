@@ -74,6 +74,7 @@ class Form extends React.Component {
         }
         const response = await axios.post('http://3.140.105.132:8081/person/create', content)
         console.log(response)
+        window.location.reload();
     }
     render() {
         const { step } = this.state;
