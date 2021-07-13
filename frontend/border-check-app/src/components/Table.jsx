@@ -17,14 +17,17 @@ import axios from 'axios'
 
     const getData = async () => {
 
-        const response = await axios.get('http://3.140.105.132:443/test')
+        const response = await axios.get('http://3.140.105.132:8081/')
         console.log(response)
         setData(response)
     };
 
 
-
-   getData()
+  //  try{
+  //    getData()
+  //  }catch(e){
+  //    console.log(e)
+  //  }
    const data = React.useMemo(
      () => [
         data1
@@ -44,7 +47,9 @@ import axios from 'axios'
    } = useTable({ columns, data })
  
    return (
-       
+    
+      <>
+     <button onClick={getData}>Click me!</button> 
      <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>
        <thead>
          {headerGroups.map(headerGroup => (
@@ -89,5 +94,6 @@ import axios from 'axios'
          })}
        </tbody>
      </table>
+     </>
    )
  }
