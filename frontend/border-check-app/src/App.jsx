@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom' 
 
 import Bar from './components/Bar';
 import Form from './components/Form';
@@ -10,10 +11,16 @@ import { CssBaseline } from '@material-ui/core';
 const App = () => {
     return (
         <>
-            <Table/>
-            <CssBaseline />
-            <Bar />
-            <Form />
+            <Router>
+                <div>
+                    <CssBaseline />
+                    <Bar />
+                    <Switch>
+                        <Route path='/table' component={Table} />
+                        <Route path='/form' component={Form} />
+                    </Switch>
+                </div>
+            </Router>
         </>
     );
 }
