@@ -17,7 +17,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
+
 @RestController
+@CrossOrigin(origins = "http://3.12.95.140:3000/")
 public class PersonController {
 
     @Autowired
@@ -28,23 +30,22 @@ public class PersonController {
     }
 
     @GetMapping("/")
+    @ResponseBody
     public String hello(){
         return "Hello, Spring!";
     }
 
-    @GetMapping("/test")
+    @GetMapping(value = "/person/get_all")
     @ResponseBody
     public List<Person> getPeople(){
         return service.getAll();
     }
 
-    @RequestMapping(value="person/create", method = RequestMethod.POST, consumes = "text/plain")
+    @RequestMapping(value="person/create", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public void createPerson(@RequestBody String givenString) throws IOException {
+    public Person createPerson(@RequestBody Map<String, String> personMap) throws IOException {
 
        // System.out.println(givenString);
-        ObjectMapper o = new ObjectMapper();
-        Map<String, String> personMap = o.readValue(givenString, Map.class);
 
        // System.out.println(personMap);
 
@@ -64,22 +65,16 @@ public class PersonController {
         Path imagePath = Path.of(".\\uploads\\" + firstName + "_" + lastName + "_" + birthDate + ".jpg");
 
         Files.write(imagePath, imageBytes);
+        Person p = new Person(firstName, lastName, birthDate, healthStatus, imagePath);
+        service.save(p);
 
-        service.save(new Person(firstName, lastName, birthDate, healthStatus, imagePath));
+        return p;
     }
 
-    @RequestMapping(value = "person/check", method = RequestMethod.POST, consumes = "text/plain")
+    @RequestMapping(value = "person/check", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public Person checkPerson(@RequestBody String givenString) throws IOException {
-       // System.out.println(givenString);
-        ObjectMapper o = new ObjectMapper();
-        Map<String, String> personMap = o.readValue(givenString, Map.class);
-
-       // System.out.println(personMap);
-
-
-        String imageInB64 = personMap.get("image"); // B64 string encoded
-
+    public Person checkPerson(@RequestBody Map<String, String> im) throws IOException {
+        String imageInB64 = im.get("image"); // B64 string encoded
 
         String base64Image = imageInB64.split(",")[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
@@ -95,19 +90,23 @@ public class PersonController {
 
         String nameOfTheMostComparableImage = null;
         double maxAccuracy = 0;
-        for (String currFileName : allFilesNamesInUploadsFolder){
+        try {
+            for (String currFileName : allFilesNamesInUploadsFolder) {
 
-            //System.out.println(currFileName);
-            double compareHist = service.compare_image(imagePath.toString(), basePicPath + currFileName);
-            if(compareHist > maxAccuracy){
-                nameOfTheMostComparableImage = currFileName;
-                maxAccuracy = compareHist;
+                //System.out.println(currFileName);
+                double compareHist = service.compare_image(imagePath.toString(), basePicPath + currFileName);
+                if (compareHist > maxAccuracy) {
+                    nameOfTheMostComparableImage = currFileName;
+                    maxAccuracy = compareHist;
+                }
             }
-        }
-        if (maxAccuracy > 0.72) {
-            System.out.println("face matching with image:" + nameOfTheMostComparableImage + " with " + maxAccuracy*100);
-        } else {
-            System.out.println("Face does not match");
+            if (maxAccuracy > 0.72) {
+                System.out.println("face matching with image:" + nameOfTheMostComparableImage + " with " + maxAccuracy * 100);
+            } else {
+                System.out.println("Face does not match");
+            }
+        }catch(IllegalStateException ex){
+            return null;
         }
 
         Person personWithThisImagePath = service.searchPersonWithThisImagePath(nameOfTheMostComparableImage);
