@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom' 
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Bar from './components/Bar';
 import Form from './components/Form';
@@ -17,7 +17,7 @@ const App = () => {
                     <Bar />
                     <Switch>
                         <Route path='/table' component={Table} />
-                        <Route path='/form' component={Form} />
+                        <Route path='/vertification' component={Form} />
                     </Switch>
                 </div>
             </Router>
