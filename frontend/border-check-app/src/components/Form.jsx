@@ -1,7 +1,6 @@
 import React from 'react';
 import {WebcamCapture} from "./Webcam";
 import {WebcamCaptureSubmit} from "./WebcamSubmit";
-import axios from 'axios';
 
 class Form extends React.Component {
     constructor(props) {
@@ -58,18 +57,8 @@ class Form extends React.Component {
     handleImageChange = (newImage) => {
         this.setState({image: newImage})
     }
-
-    async postData() {
-        const content = {
-            image: this.state.image
-        }
-        const response = await axios.post('http://3.140.105.132:8081/person/create', content)
-        console.log(response)
-    }
     render() {
         const { step } = this.state;
-        const { image, alert } = this.state;
-        const values = { image, alert }
         switch(step) {
             case 1:
                 return(
