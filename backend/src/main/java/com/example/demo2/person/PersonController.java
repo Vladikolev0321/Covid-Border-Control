@@ -1,15 +1,9 @@
 package com.example.demo2.person;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -45,19 +39,11 @@ public class PersonController {
     @ResponseBody
     public Person createPerson(@RequestBody Map<String, String> personMap) throws IOException {
 
-       // System.out.println(givenString);
-
-       // System.out.println(personMap);
-
         String firstName = personMap.get("firstName");
         String lastName = personMap.get("lastName");
         LocalDate birthDate = LocalDate.parse(personMap.get("birthdate"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         HealthStatus healthStatus = HealthStatus.valueOf(personMap.get("healthStatus"));
         String imageInB64 = personMap.get("image"); // B64 string encoded
-
-        // get that b64 string
-        // save image path in person property
-        // decode it and save it to uploads folder
 
         String base64Image = imageInB64.split(",")[1];
         byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
@@ -93,7 +79,6 @@ public class PersonController {
         double maxAccuracy = 0;
         for (String currFileName : allFilesNamesInUploadsFolder) {
 
-            //System.out.println(currFileName);
             double compareHist = service.compare_image(imagePath.toString(), basePicPath + currFileName);
             if (compareHist > maxAccuracy) {
                 nameOfTheMostComparableImage = currFileName;
@@ -105,7 +90,6 @@ public class PersonController {
         } else {
             System.out.println("Face does not match");
         }
-
 
         Person personWithThisImagePath = service.searchPersonWithThisImagePath(nameOfTheMostComparableImage);
 
