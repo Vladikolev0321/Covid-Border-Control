@@ -91,28 +91,25 @@ public class PersonController {
 
         String nameOfTheMostComparableImage = null;
         double maxAccuracy = 0;
-        try {
-            for (String currFileName : allFilesNamesInUploadsFolder) {
+        for (String currFileName : allFilesNamesInUploadsFolder) {
 
-                //System.out.println(currFileName);
-                double compareHist = service.compare_image(imagePath.toString(), basePicPath + currFileName);
-                if (compareHist > maxAccuracy) {
-                    nameOfTheMostComparableImage = currFileName;
-                    maxAccuracy = compareHist;
-                }
+            //System.out.println(currFileName);
+            double compareHist = service.compare_image(imagePath.toString(), basePicPath + currFileName);
+            if (compareHist > maxAccuracy) {
+                nameOfTheMostComparableImage = currFileName;
+                maxAccuracy = compareHist;
             }
-            if (maxAccuracy > 0.72) {
-                System.out.println("face matching with image:" + nameOfTheMostComparableImage + " with " + maxAccuracy * 100);
-            } else {
-                System.out.println("Face does not match");
-            }
-        }catch(IllegalStateException ex){
-            Files.delete(imagePath);
-            return null;
         }
+        if (maxAccuracy > 0.72) {
+            System.out.println("face matching with image:" + nameOfTheMostComparableImage + " with " + maxAccuracy * 100);
+        } else {
+            System.out.println("Face does not match");
+        }
+
 
         Person personWithThisImagePath = service.searchPersonWithThisImagePath(nameOfTheMostComparableImage);
 
+        Files.delete(imagePath);
         return personWithThisImagePath;
     }
 
