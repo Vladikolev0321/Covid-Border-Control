@@ -17,7 +17,7 @@ const App = () => {
                     <Bar />
                     <Switch>
                         <Route path='/table' component={Table} />
-                        <Route path='/vertification' component={Form} />
+                        <Route path='/verification' component={Form} />
                     </Switch>
                 </div>
             </Router>

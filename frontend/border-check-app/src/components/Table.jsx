@@ -23,11 +23,6 @@ import axios from 'axios'
     };
 
 
-  //  try{
-  //    getData()
-  //  }catch(e){
-  //    console.log(e)
-  //  }
    const data = React.useMemo(
      () => [
         data1

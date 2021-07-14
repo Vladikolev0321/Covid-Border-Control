@@ -10,18 +10,18 @@ const Bar = () => {
           <Toolbar>
             <PersonIcon />
             <Typography variant="h6" style={{marginRight: "2%"}}>
-              Vertifaction
+              Verification
             </Typography>
             <CheckCircleIcon />
             <Typography variant="h6" style={{marginRight: "2%"}}>
-              <Link style={{color: 'white'}} href="/vertification">
-                Vertify now
+              <Link style={{color: 'white'}} href="/verification">
+                Verify now
               </Link>
             </Typography>
             <TocIcon/>
             <Typography variant="h6" style={{marginRight: "2%"}}>
               <Link style={{color: 'white'}} href="/table">
-                Table with Persons
+                Table with People
               </Link>
             </Typography>
           </Toolbar>
