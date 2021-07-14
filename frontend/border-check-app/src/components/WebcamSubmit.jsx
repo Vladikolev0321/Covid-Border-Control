@@ -40,7 +40,7 @@ export const WebcamCaptureSubmit = ({prevStep, handleImageChange, defaultImage, 
         const content = {
             image: defaultImage
         }
-        const response = await axios.post('https://webhook.site/437f35dd-9219-4550-990f-5162bbcaf5c9', content)
+        const response = await axios.post('https://server.tuesbordercontrol.com/person/check', content)
         console.log(response)
     }
     
