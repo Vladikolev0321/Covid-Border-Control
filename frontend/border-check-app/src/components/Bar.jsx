@@ -14,7 +14,7 @@ const Bar = () => {
             </Typography>
             <CheckCircleIcon />
             <Typography variant="h6" style={{marginRight: "2%"}}>
-              <Link style={{color: 'white'}} href="/verification">
+              <Link style={{color: 'white'}} href="/verify">
                 Verify now
               </Link>
             </Typography>

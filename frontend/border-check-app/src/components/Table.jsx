@@ -17,7 +17,7 @@ import axios from 'axios'
 
     const getData = async () => {
 
-        const response = await axios.get('http://3.140.105.132:8081/')
+        const response = await axios.get('https://server.tuesbordercontrol.com/person/get_all')
         console.log(response)
         setData(response)
     };
