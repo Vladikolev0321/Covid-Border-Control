@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Bar from './components/Bar';
 import Form from './components/Form';
-import { Table } from './components/Table';
+import MyTable from "./components/myTable";
 
 import { CssBaseline } from '@material-ui/core';
 
@@ -16,7 +16,7 @@ const App = () => {
                     <CssBaseline />
                     <Bar />
                     <Switch>
-                        <Route path='/table' component={Table} />
+                        <Route path='/table' component={MyTable} />
                         <Route path='/verify' component={Form} />
                     </Switch>
                 </div>

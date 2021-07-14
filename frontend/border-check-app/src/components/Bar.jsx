@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Link } from '@material-ui/core';
-import PersonIcon from '@material-ui/icons/Person';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import TocIcon from '@material-ui/icons/Toc';
 import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';

@@ -71,8 +71,6 @@ class Form extends React.Component {
     }
     render() {
         const { step } = this.state;
-        const { image, alert } = this.state;
-        const values = { image, alert }
         switch(step) {
             case 1:
                 return(
