@@ -11,6 +11,7 @@ import {
     Typography,
     TablePagination,
     TableFooter,
+    Grid
 } from '@material-ui/core';
 import axios from "axios";
 
@@ -78,50 +79,55 @@ function MyTable() {
     };
 
     return (
-        <div>
-        <TableContainer component={Paper} className={classes.tableContainer}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell className={classes.tableHeaderCell}> ID </TableCell>
-                        <TableCell className={classes.tableHeaderCell}> First Name </TableCell>
-                        <TableCell className={classes.tableHeaderCell}> Last Name </TableCell>
-                        <TableCell className={classes.tableHeaderCell}> Birthdate </TableCell>
-                        <TableCell className={classes.tableHeaderCell}> Health Status </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                        <TableRow key={row.id}>
-                            <TableCell>
-                                <Typography className={classes.name}>{row.id}</Typography>
-                            </TableCell>
-                            <TableCell>
-                                <Typography color="primary" variant="subtitle2">{row.firstName}</Typography>
-                            </TableCell>
-                            <TableCell>
-                                <Typography color="primary" variant="subtitle2">{row.lastName}</Typography>
-                            </TableCell>
-                            <TableCell>{row.birthdate}</TableCell>
-                            <TableCell>
-                                <Typography className={classes.status}>{row.healthStatus}</Typography>
-                            </TableCell>
+        <div style={{marginTop: '2%'}}>
+        <Grid container justify='center'>
+            <TableContainer component={Paper} className={classes.tableContainer}>
+                <Table className={classes.table} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell className={classes.tableHeaderCell}> ID </TableCell>
+                            <TableCell className={classes.tableHeaderCell}> First Name </TableCell>
+                            <TableCell className={classes.tableHeaderCell}> Last Name </TableCell>
+                            <TableCell className={classes.tableHeaderCell}> Birthdate </TableCell>
+                            <TableCell className={classes.tableHeaderCell}> Health Status </TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-                <TableFooter>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 15]}
-                        component="div"
-                        count={data.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </TableFooter>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                            <TableRow key={row.id}>
+                                <TableCell style={{maxWidth: '1%'}}>
+                                    <Typography className={classes.name}>{row.id}</Typography>
+                                </TableCell>
+                                <TableCell style={{width: '15%'}}>
+                                    <Typography color="primary" variant="subtitle2">{row.firstName}</Typography>
+                                </TableCell>
+                                <TableCell style={{width: '15%'}}>
+                                    <Typography color="primary" variant="subtitle2">{row.lastName}</Typography>
+                                </TableCell>
+                                <TableCell style={{width: '15%'}}>
+                                    <Typography variant="subtitle2">{row.birthdate}</Typography>
+                                </TableCell>
+                                <TableCell style={{width: '15%'}}>
+                                    <Typography className={classes.status}>{row.healthStatus}</Typography>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                    <TableFooter>
+                        <TablePagination
+                            rowsPerPageOptions={[5, 10, 15]}
+                            component="div"
+                            count={data.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onChangePage={handleChangePage}
+                            onChangeRowsPerPage={handleChangeRowsPerPage}
+                            style={{maxWidth: '160%', minWidth: '160%'}}
+                        />    
+                    </TableFooter>
+                </Table>
+            </TableContainer>
+        </Grid>
         </div>
     );
 }
