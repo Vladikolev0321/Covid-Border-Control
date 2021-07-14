@@ -3,14 +3,15 @@ import { AppBar, Toolbar, Typography, Link } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import TocIcon from '@material-ui/icons/Toc';
+import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';
 
 const Bar = () => {
     return (
         <AppBar position="relative" color="primary">
           <Toolbar>
-            <PersonIcon />
+            <AirplanemodeActiveIcon />
             <Typography variant="h6" style={{marginRight: "2%"}}>
-              Verification
+              Border Verification
             </Typography>
             <CheckCircleIcon />
             <Typography variant="h6" style={{marginRight: "2%"}}>

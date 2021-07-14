@@ -1,6 +1,10 @@
 import React from 'react';
 import {WebcamCapture} from "./Webcam";
 import {WebcamCaptureSubmit} from "./WebcamSubmit";
+import CircularIndeterminate from "./WaitSpinner";
+import PassScreen from "./PassScreen";
+import CrossScreen from "./CrossScreen";
+import axios from 'axios';
 
 class Form extends React.Component {
     constructor(props) {
@@ -57,8 +61,18 @@ class Form extends React.Component {
     handleImageChange = (newImage) => {
         this.setState({image: newImage})
     }
+
+    async postData() {
+        const content = {
+            image: this.state.image
+        }
+        const response = await axios.post('http://3.140.105.132:8081/person/create', content)
+        console.log(response)
+    }
     render() {
         const { step } = this.state;
+        const { image, alert } = this.state;
+        const values = { image, alert }
         switch(step) {
             case 1:
                 return(
@@ -75,11 +89,25 @@ class Form extends React.Component {
                     <WebcamCaptureSubmit 
                     postData={this.postData}
                     prevStep={this.prevStep}
+                    nextStep={this.nextStep} 
                     handleImageChange={this.handleImageChange}
                     defaultImage={this.state.image}
                     alert={this.state.alert}
                     />
                 );
+            case 3:
+                return(
+                    <CircularIndeterminate />
+                );
+            case 4:
+                return(
+                    <PassScreen />
+                );
+            case 5:
+                return(
+                    <CrossScreen />
+                );
+            
             default:
         }
     }
