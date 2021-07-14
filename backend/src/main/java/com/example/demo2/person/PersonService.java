@@ -60,16 +60,12 @@ public class PersonService {
         return ++counter;
     }
 
-    // grayscale face and return only the face part of the image as a Mat object
     public static Mat conv_Mat(String img) {
         Mat image0 = Imgcodecs.imread(img);
         Mat image1 = new Mat();
-        // Grayscale
         Imgproc.cvtColor(image0, image1, Imgproc.COLOR_BGR2GRAY);
-        // Detecting faces
         MatOfRect faceDetections = new MatOfRect();
         faceDetector.detectMultiScale(image1, faceDetections);
-        // range of face images in rec
 
         for (Rect rect : faceDetections.toArray()) {
             Mat face = new Mat(image1, rect);
@@ -77,7 +73,7 @@ public class PersonService {
         }
         return null;
     }
-    // compare 2 images
+
     public static double compare_image(String img_1, String img_2) {
         Mat face_1 = conv_Mat(img_1);
         Mat face_2 = conv_Mat(img_2);
@@ -85,21 +81,17 @@ public class PersonService {
         Mat hist_1 = new Mat();
         Mat hist_2 = new Mat();
 
-        //Color range
         MatOfFloat ranges = new MatOfFloat(0f, 256f);
-        //Histogram size, the bigger the match, the more accurate (slower)
         MatOfInt histSize = new MatOfInt(1000);
 
         Imgproc.calcHist(Arrays.asList(face_1), new MatOfInt(0), new Mat(), hist_1, histSize, ranges);
         Imgproc.calcHist(Arrays.asList(face_2), new MatOfInt(0), new Mat(), hist_2, histSize, ranges);
 
-        // CORREL correlation coefficient
         double res = 0.0;
         res = Imgproc.compareHist(hist_1, hist_2, Imgproc.CV_COMP_CORREL);
         return res;
     }
 
-    // list all files names for given directory
     public Set<String> listFilesUsingDirectoryStream(String dir, Path currImage) throws IOException {
         Set<String> fileList = new HashSet<>();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir))) {
