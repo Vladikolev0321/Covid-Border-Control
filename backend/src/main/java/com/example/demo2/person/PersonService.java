@@ -103,7 +103,8 @@ public class PersonService {
         Imgproc.calcHist(Arrays.asList(face_2), new MatOfInt(0), new Mat(), hist_2, histSize, ranges);
 
         // CORREL correlation coefficient
-        double res = Imgproc.compareHist(hist_1, hist_2, Imgproc.CV_COMP_CORREL);
+        double res = 0.0;
+        res = Imgproc.compareHist(hist_1, hist_2, Imgproc.CV_COMP_CORREL);
         return res;
     }
 
