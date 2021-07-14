@@ -63,18 +63,13 @@ public class PersonService {
     // grayscale face and return only the face part of the image as a Mat object
     public static Mat conv_Mat(String img) {
         Mat image0 = Imgcodecs.imread(img);
-
         Mat image1 = new Mat();
         // Grayscale
         Imgproc.cvtColor(image0, image1, Imgproc.COLOR_BGR2GRAY);
         // Detecting faces
         MatOfRect faceDetections = new MatOfRect();
         faceDetector.detectMultiScale(image1, faceDetections);
-        // range of face images in rect
-
-        if(faceDetections.toArray().length < 1){
-            return null;
-        }
+        // range of face images in rec
 
         for (Rect rect : faceDetections.toArray()) {
             Mat face = new Mat(image1, rect);
@@ -86,10 +81,6 @@ public class PersonService {
     public static double compare_image(String img_1, String img_2) {
         Mat face_1 = conv_Mat(img_1);
         Mat face_2 = conv_Mat(img_2);
-
-        if(face_2 == null || face_1 == null){
-            throw new IllegalStateException("Couldn't find faces on the images!");
-        }
 
         Mat hist_1 = new Mat();
         Mat hist_2 = new Mat();

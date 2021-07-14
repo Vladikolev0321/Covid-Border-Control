@@ -18,7 +18,7 @@ public class Demo2Application {
         SpringApplication.run(Demo2Application.class, args);
 
 
-//        String imgFile = "uploads/ivan_proba2.png";
+//        String imgFile = "uploads/_received7.jpg";
 //        Mat src = Imgcodecs.imread(imgFile);
 //
 //        String xmlFile = "xml/lbpcascade_frontalface.xml";
@@ -28,20 +28,17 @@ public class Demo2Application {
 //        cc.detectMultiScale(src, faceDetection);
 //        System.out.println(String.format("Detected faces: %d", faceDetection.toArray().length));
 //
-//        for(Rect rect: faceDetection.toArray()) {
-//            Imgproc.rectangle(src, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height) , new Scalar(0, 0, 255), 3);
+//        for (Rect rect : faceDetection.toArray()) {
+//            Imgproc.rectangle(src, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height), new Scalar(0, 0, 255), 3);
 //        }
 //        // check if there is only one face or if it there are no faces
-//     //   if(faceDetection.toArray().length != 1){
-//            System.out.println("Take another picture");
-//     //   }else{
-//            Imgcodecs.imwrite("uploads/ivan_proba2_out.png", src);
-//            System.out.println("Image Detection Finished");
-//
-//     //   }
-//
-//    }
+//        //   if(faceDetection.toArray().length != 1){
+//        System.out.println("Take another picture");
+//        //   }else{
+//        Imgcodecs.imwrite("uploads/bruh_out.jpg", src);
+//        System.out.println("Image Detection Finished");
 
+        //   }
 
     }
 }
