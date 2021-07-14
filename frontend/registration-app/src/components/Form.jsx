@@ -72,7 +72,7 @@ class Form extends React.Component {
             healthStatus: this.state.healthStatus,
             image: this.state.image
         }
-        const response = await axios.post('http://3.140.105.132:8081/person/create', content)
+        const response = await axios.post('https://server.tuesbordercontrol.com/person/create', content)
         console.log(response)
         window.location.reload();
     }

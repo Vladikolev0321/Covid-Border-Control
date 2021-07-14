@@ -19,7 +19,6 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "http://3.12.95.140:3000/")
 public class PersonController {
 
     @Autowired
@@ -42,6 +41,7 @@ public class PersonController {
     }
 
     @RequestMapping(value="person/create", method = RequestMethod.POST, consumes = "application/json")
+    @CrossOrigin(origins = "https://register.tuesbordercontrol.com/")
     @ResponseBody
     public Person createPerson(@RequestBody Map<String, String> personMap) throws IOException {
 
@@ -72,6 +72,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "person/check", method = RequestMethod.POST, consumes = "application/json")
+    @CrossOrigin(origins = "https://verify.tuesbordercontrol.com/")
     @ResponseBody
     public Person checkPerson(@RequestBody Map<String, String> im) throws IOException {
         String imageInB64 = im.get("image"); // B64 string encoded
@@ -106,13 +107,11 @@ public class PersonController {
                 System.out.println("Face does not match");
             }
         }catch(IllegalStateException ex){
+            Files.delete(imagePath);
             return null;
         }
 
         Person personWithThisImagePath = service.searchPersonWithThisImagePath(nameOfTheMostComparableImage);
-
-
-        Files.delete(imagePath);
 
         return personWithThisImagePath;
     }
