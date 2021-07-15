@@ -40,8 +40,9 @@ export const WebcamCaptureSubmit = ({nextStep, prevStep, handleImageChange, defa
         const content = {
             image: defaultImage
         }
-        const response = await axios.post('https://webhook.site/437f35dd-9219-4550-990f-5162bbcaf5c9', content)
+        const response = await axios.post('https://server.tuesbordercontrol.com/person/check', content)
         console.log(response)
+        nextStep()
     }
     
     
@@ -93,10 +94,9 @@ export const WebcamCaptureSubmit = ({nextStep, prevStep, handleImageChange, defa
                     <br />
                     <br />
                     <Grid container spacing={6} justify="center" >
-                        <Button variant="contained" color="primary" size="large" style={{width: "30%"}} onClick={(e) => {
-                            postData.bind(this);
-                            nextStep();
-                        }}>Verify</Button>
+                        <Button variant="contained" color="primary" size="large" style={{width: "30%"}} onClick={
+                            postData.bind(this)
+                        }>Verify</Button>
                     </Grid>
                 </Paper>
             </Container>
