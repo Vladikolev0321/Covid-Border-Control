@@ -1,10 +1,7 @@
 import React from 'react';
 import {WebcamCapture} from "./Webcam";
 import {WebcamCaptureSubmit} from "./WebcamSubmit";
-import CircularIndeterminate from "./WaitSpinner";
-import PassScreen from "./PassScreen";
-import CrossScreen from "./CrossScreen";
-import axios from 'axios';
+import { Button, Container, Paper, Typography, CssBaseline, Grid, TextField } from '@material-ui/core';
 
 class Form extends React.Component {
     constructor(props) {
@@ -13,7 +10,8 @@ class Form extends React.Component {
         this.state = {
             step: 1,
             image: '',
-            alert: 0
+            alert: 0,
+            data: []
         }
     }
 
@@ -61,13 +59,9 @@ class Form extends React.Component {
     handleImageChange = (newImage) => {
         this.setState({image: newImage})
     }
-
-    async postData() {
-        const content = {
-            image: this.state.image
-        }
-        const response = await axios.post('http://3.140.105.132:8081/person/create', content)
-        console.log(response)
+    handleDataChange = (newData) => {
+        this.setState({data: newData})
+        console.log(this.state.data.firstName)
     }
     render() {
         const { step } = this.state;
@@ -89,21 +83,69 @@ class Form extends React.Component {
                     prevStep={this.prevStep}
                     nextStep={this.nextStep} 
                     handleImageChange={this.handleImageChange}
+                    handleDataChange={this.handleDataChange}
                     defaultImage={this.state.image}
                     alert={this.state.alert}
                     />
                 );
             case 3:
                 return(
-                    <CircularIndeterminate />
-                );
-            case 4:
-                return(
-                    <PassScreen />
-                );
-            case 5:
-                return(
-                    <CrossScreen />
+                    <Container  style={{marginTop: "2%"}} maxWidth="sm">
+            <CssBaseline />
+            <Paper style={{padding: "8%"}} elevation={12}>
+                <Typography variant="h4" color="textPrimary" align="center" >Final Form</Typography>
+                <br/>
+                <hr/>
+                <br />
+                <Grid container spacing={6} justify="center">
+                    <Grid item xs={12} sm={6} md={6}>
+                        <TextField
+                            fullWidth
+                            label="First Name"
+                            defaultValue={this.state.data.firstName}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Last Name"
+                            defaultValue={this.state.data.lastName}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12} >
+                        <TextField
+                            fullWidth
+                            label="Birthdate"
+                            format={'DD/MM/YYYY'}
+                            defaultValue ={this.state.data.birthdate}
+                            type="date"
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={12}>
+                        <TextField
+                            fullWidth
+                            label="Covid Status"
+                            defaultValue={this.state.data.healthStatus}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </Grid>
+                </Grid>
+                <br />
+                <br />
+                <br />
+            </Paper>
+        </Container>
                 );
             
             default:

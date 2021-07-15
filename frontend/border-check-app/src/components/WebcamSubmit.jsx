@@ -13,7 +13,7 @@ const videoConstraints = {
 
 
 
-export const WebcamCaptureSubmit = ({nextStep, prevStep, handleImageChange, defaultImage, alert}) => {
+export const WebcamCaptureSubmit = ({nextStep, prevStep, handleImageChange, defaultImage, alert, handleDataChange}) => {
 
     const [image,setImage]=useState(defaultImage);
     const webcamRef = React.useRef(null);
@@ -42,6 +42,7 @@ export const WebcamCaptureSubmit = ({nextStep, prevStep, handleImageChange, defa
         }
         const response = await axios.post('https://server.tuesbordercontrol.com/person/check', content)
         console.log(response)
+        handleDataChange(response.data)
         nextStep()
     }
     
