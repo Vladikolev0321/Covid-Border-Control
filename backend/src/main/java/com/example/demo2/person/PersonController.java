@@ -71,7 +71,7 @@ public class PersonController {
 
         Files.write(imagePath, imageBytes);
 
-        String basePicPath = "uploads\\";
+        String basePicPath = ".\\uploads\\";
 
         Set<String> allFilesNamesInUploadsFolder = service.listFilesUsingDirectoryStream(basePicPath, imagePath);
 
@@ -85,6 +85,8 @@ public class PersonController {
                 maxAccuracy = compareHist;
             }
         }
+        System.out.println(maxAccuracy);
+
         if (maxAccuracy > 0.72) {
             System.out.println("face matching with image:" + nameOfTheMostComparableImage + " with " + maxAccuracy * 100);
         } else {
