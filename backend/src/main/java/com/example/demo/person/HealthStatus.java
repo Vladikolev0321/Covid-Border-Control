@@ -1,4 +1,4 @@
-package com.example.demo2.person;
+package com.example.demo.person;
 
 public enum HealthStatus {
     NONE,

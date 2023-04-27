@@ -1,4 +1,4 @@
-package com.example.demo2.person;
+package com.example.demo.person;
 
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;

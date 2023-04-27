@@ -1,4 +1,4 @@
-package com.example.demo2.person;
+package com.example.demo.person;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
